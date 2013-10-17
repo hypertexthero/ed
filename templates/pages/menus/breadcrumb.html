@@ -1,0 +1,27 @@
+{% load i18n future pages_tags %}
+
+{% if on_home %}
+{% if settings.SITE_TITLE %}<a class="brand" href="/">{{ settings.SITE_TITLE }}</a>{% endif %}
+{% else %}
+{% for page in page_branch %}
+    {% if not has_home and page.is_primary and forloop.first %}
+        {% if settings.SITE_TITLE %}<a href="/">{{ settings.SITE_TITLE }}</a>{# class="brand"  #}{% endif %}
+        {# <a href="{% url "home" %}">{% trans "Home" %}</a> #}
+        <span class="divider"> / </span>
+    {% endif %}
+
+    {% if page.is_current_or_ascendant %}
+    {% if page.is_current %}
+    <span id="breadcrumb-menu-{{ page.html_id }}"
+        class="active">{{ page.title }}</span>
+    {% else %}
+    <span id="breadcrumb-menu-{{ page.html_id }}">
+        <a href="{{ page.get_absolute_url }}">{{ page.title }}</a>
+        <span class="divider"> / </span>
+    </span>
+    {% endif %}
+    {% if page.has_children %}{% page_menu page %}{% endif %}
+    {% endif %}
+
+{% endfor %}
+{% endif %}

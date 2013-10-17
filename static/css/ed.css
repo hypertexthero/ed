@@ -1,0 +1,61 @@
+* {margin:0; padding:0;}
+  body {padding:10px; background:#222; color:#ccc;}
+  a {color:#ccc; text-decoration:underline; /*color:#ABEBFF;*/} 
+  a:hover {color:#fafafa;}
+  a.btn {text-decoration:none;}
+  #thumbs a {color:#999;}
+  img {box-shadow:none;}
+  p {margin:0 0 1em;}
+  p.breadcrumbs, p.menu {margin:0 0 7px; float:left; width:70%;}
+  p.menu {width:30%; text-align:right; margin-bottom:2em;}
+  h1 {font-size:22px; margin: 0 0 0.25em; font-weight:bold; line-height:26px;}
+  h2 {font-weight:bold; margin-bottom:0.25em; font-size:18px; line-height:22px;}
+  h3 {margin-bottom:1em;}
+  #header {margin-bottom:2.5em;}
+  #content {float:left; width:79%; margin-bottom:1.5em;}
+  #sidebar {float:left; width:19%;}
+  .thumbnails {list-style: decimal inside;}
+  li.thumb {float:left; text-align:center; color:#999; font-size:12px; font-weight:bold; height:230px; width:220px; margin-bottom:10px;}
+/*margin:0 0 10px 30px;*/
+  
+/*ol.thumbs li a {display:block; height:210px; border:none;}
+  .thumbs li:hover, ol.thumbs li:active {color:#fff !important;}
+  .thumbs li img {height:210px; margin:-10px 0 0 -20px; padding:10px;}*/
+  
+  
+  li.thumb:hover {background:#333; border-radius:5px;}
+  li.thumb:focus, ol#thumbs li:active {outline:1px dashed #ABEBFF;}
+  li.thumb a {text-decoration:none; color:#999;}
+  /*  div.photo {display:block;}*/
+  li.thumb img {padding:5px; margin:0 auto 5px; max-width:200px;}
+  /* https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_selectors*/
+ /*http://stackoverflow.com/a/6810937/412329 */
+  a.mark {} /*display:block;*/
+  a.mark i {font-style:normal;}
+  a.mark.yes {color:#09f !important;}
+  a.mark.yes b {text-transform:uppercase;}
+  a.yes + img {box-shadow: 0px 0px 5px 3px #09f; color:#09f;} 
+  /*ol#thumbs li.yes b {background:#09f;}*/
+  a.mark.no {color:#444;}
+  a.mark.no i {text-transform:uppercase;}
+  a.no + img {opacity:0.2;}
+  a.neutral {}
+    
+  ul {margin:0 0 1em;}
+  /*button {padding:0.6em 0.7em 0.7em; font-weight:bold; line-height:8px; border-radius:5px; background:#fff;}
+    button:hover {cursor:pointer; background:#ffc;}*/
+  form {margin-bottom:1em;}
+  form#viewfilter {font-size:12px;}
+  legend {color:#ccc; border-bottom:1px solid #555;}
+  .form-actions {border-top:0; background:none;}
+  .hide {display:none;}
+  .show {display:block;}
+  .unstyled {list-style:none;}
+  .small {font-size:12px;}
+  .larger {font-size:16px;}
+  .quiet {color:#888;}
+  .help {color:#fff; padding:0 0 1em;}
+  .pull-left {float:left;}
+  .pull-right {float:right;}
+  .clear {clear:both;}
+  .hilight {outline:double red;}

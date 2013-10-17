@@ -1,0 +1,187 @@
+{% load mezzanine_tags %}
+
+{% editable_loader %}
+
+<script>
+// Help
+$( ".togglehelp" ).click(function() {
+  $( ".help" ).toggle();
+});
+
+// Sortable photos
+$(function() {
+  $( ".thumbnails" ).sortable();
+});
+
+
+// ajax saving of sort order - http://rstrobl.com/blog/2012/01/19/sorting-django-model-instances-jqueryui-sortable/
+  // $(document).ready(function() {
+  //   $( ".thumbnails" ).sortable({
+  //     update: function(event, ui) {
+  //       var serial = $('.thumbnails').sortable('serialize');
+  //    $.ajax({
+  //     {# url: "{% url 'editdown.views.sort_photos' collection.id %}",#}
+  //     type: "post",
+  //     data: serial
+  //   });
+  //     },
+  //   // }).disableSelection();
+  // });
+
+
+
+// Resizeable photos
+ // $(function() {
+ //   $( ".photo" ).resizable({
+ //     alsoResize: ".photo"
+ //   });
+ //   $( ".photo" ).resizable();
+ // });
+
+
+
+
+// Toggle between selected, rejected and neutral photo settings
+// http://stackoverflow.com/a/15520393/412329
+var classNames = ['yes', 'no', 'neutral'];
+
+// var statuses=[1, 2, 3];
+
+$( '.mark' ).click(function () {
+    var $this = $(this);
+    $this.toggleClass(function (i, className, b) {
+        var ret_index;
+        $.each(classNames, function (index, value) {
+            if ($this.hasClass(value)) {
+                ret_index = (index + 1) % classNames.length;
+                // $this.parent('input').filter("[value='"+statuses+"']").prop("value", 'OPA');
+            }
+        });
+        $this.removeClass(classNames.join(' '));
+        return classNames[ret_index];
+    });
+});
+
+
+
+
+// =todo: change value of hidden input so when form is saved the next edit remembers  
+
+// $value = $('.mark').map(function(){return $(this).val()}).get().join('');
+// $("[id^=status]").(function () {
+//     var num = this.id.slice(6);
+//     // if there is a risk of ambiguity, you might check here that +num==num
+//     var $elem = $('.status'+num);
+//     $("[id^=status]").val(classNames[ret_index]);
+// });
+
+        
+// $('.mark').click(function() {
+//     $value = $('.mark').map(function(){return $(this).val()}).get();
+//     $('input.markinput').val($value);
+// });
+// 
+// 
+// $(function(){
+//     $('.markinput').click(function () {
+//         $(this).siblings('input.deleted').val("True");
+//     });
+// });
+    
+    // set values to be save when Save This Edit is clicked
+    // $('input[name="viewFilter"]').bind('change',function(){
+    //     var showOrHide = ($(this).val() == 1) ? true : false;
+    //     $( ".yes" ).parents('li').toggle($(this).val());
+    //     $( ".no" ).parents('li').toggle($(this).val());
+    //     $( ".neutral").parents('li').toggle($(this).val());
+    //     $( ".neutral", ".yes", ".no" ).parents('li').toggle($(this).val());
+    //  });
+    // $this.toggleClass(function (i, className, b) {
+    //     var ret_index;
+    //     $.each(classNames, function (index, value) {
+    //         if ($this.hasClass(value)) {
+    //             ret_index = (index + 1) % classNames.length;
+    //         }
+    //     });
+    //     $this.removeClass(classNames.join(' '));
+    //     return classNames[ret_index];
+    // });
+    //
+
+
+
+
+// Colorbox for viewing images
+$(document).ready(function(){
+	//Examples of how to assign the Colorbox event to elements
+	$(".viewthumb").colorbox({rel:'viewthumb', opacity:0.85});
+	$('.non-retina').colorbox({rel:'group5', transition:'none'})
+	$('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+	
+	//Example of preserving a JavaScript event for inline calls.
+  // $("#click").click(function(){ 
+  //  $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+  //  return false;
+  // });
+});
+
+
+
+// View filter
+// $( "#tyes" ).bind('change',function() {
+//   $( ".yes" ).parents('li').toggle($(this).val());
+// });
+// $( "#tno" ).bind('change',function() {
+//   $( ".no" ).parents('li').toggle($(this).val());
+// });
+// $( "#tneutral" ).bind('change',function() {
+//   $( ".neutral").parents('li').toggle($(this).val());
+// });
+// $( "#tall" ).bind('change',function() {
+//   $( ".neutral", ".yes", ".no" ).parents('li').toggle($(this).val());
+// });
+
+
+// $(function() {
+//     $("[name=viewFilter]").click(function(){
+//             $('.tohide').hide();
+//             $("#thumb-"+$(this).val()).show('slow');
+//     });
+//  });
+
+// $('input[name="viewFilter"]').click(function () {
+//     // $(this).siblings().attr('class', 'hide').end().toggleClass('hide show');
+//     $( ".yes" ).parents('li').attr('class', 'hide').end().toggleClass('hide show');
+//     $( ".no" ).parents('li').attr('class', 'hide').end().toggleClass('hide show');
+//     $( ".neutral").parents('li').attr('class', 'hide').end().toggleClass('hide show');
+//     $( ".neutral", ".yes", ".no" ).parents('li').attr('class', 'hide').end().toggleClass('hide show');
+// });
+
+// $('input[name="viewFilter"]').bind('change',function(){
+//     var showOrHide = ($(this).val() == 1) ? true : false;
+//     $( ".yes" ).parents('li').toggle($(this).val());
+//     $( ".no" ).parents('li').toggle($(this).val());
+//     $( ".neutral").parents('li').toggle($(this).val());
+//     $( ".neutral", ".yes", ".no" ).parents('li').toggle($(this).val());
+//  });
+ 
+// $('.toggleselections').bind('change',function() {
+//     $(this).siblings('.toggle').toggle($(this).val());
+// });
+
+
+// Mozilla Persona
+
+
+{% if settings.GOOGLE_ANALYTICS_ID and not request.user.is_staff %}
+var _gaq = _gaq || [['_trackPageview']];
+_gaq.unshift(['_setAccount', '{{ settings.GOOGLE_ANALYTICS_ID }}']);
+(function(d, t) {
+    var g = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+    g.async = true;
+    g.src = '//www.google-analytics.com/ga.js';
+    s.parentNode.insertBefore(g, s);
+})(document, 'script');
+{% endif %}
+</script>

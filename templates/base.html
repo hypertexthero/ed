@@ -1,0 +1,172 @@
+{# =Mozilla =Persona - http://django-browserid.readthedocs.org/en/v0.9/setup.html#installation #}
+{# {% load browserid %} #}
+
+<!doctype html>
+<html lang="{{ LANGUAGE_CODE }}"{% if LANGUAGE_BIDI %} dir="rtl"{% endif %}>
+{% load pages_tags mezzanine_tags i18n future staticfiles %}
+<head>
+
+<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width">
+<meta name="keywords" content="{% block meta_keywords %}{% endblock %}">
+<meta name="description" content="{% block meta_description %}{% endblock %}">
+<title>{% block meta_title %}{% endblock %}{% if settings.SITE_TITLE %} | {{ settings.SITE_TITLE }}{% endif %}</title>
+<link rel="shortcut icon" href="{% static "img/favicon.ico" %}">
+
+{% ifinstalled mezzanine.blog %}
+<link rel="alternate" type="application/rss+xml" title="RSS" href="{% url "blog_post_feed" "rss" %}">
+<link rel="alternate" type="application/atom+xml" title="Atom" href="{% url "blog_post_feed" "atom" %}">
+{% endifinstalled %}
+
+{% compress css %}
+<link rel="stylesheet" href="{% static "css/bootstrap.css" %}">
+<link rel="stylesheet" href="{% static "css/mezzanine.css" %}">
+<link rel="stylesheet" href="{% static "css/bootstrap-responsive.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/rtl.css" %}">
+{% endif %}
+{% ifinstalled cartridge.shop %}
+<link rel="stylesheet" href="{% static "css/cartridge.css" %}">
+{% if LANGUAGE_BIDI %}
+<link rel="stylesheet" href="{% static "css/cartridge.rtl.css" %}">
+{% endif %}
+{% endifinstalled %}
+{% block extra_css %}{% endblock %}
+
+<link rel="stylesheet" href="{% static "css/ed.css" %}">
+{% endcompress %}
+
+{% compress js %}
+
+{# <script src="{% static "mezzanine/js/"|add:settings.JQUERY_FILENAME %}"></script> #}
+
+<script src="{% static "js/jquery-1.10.2.min.js" %}"></script>
+<script src="{% static "js/jquery-ui-1.10.3.custom.min.js" %}"></script>
+<script src="{% static "js/jquery.ui.touch-punch.min.js" %}"></script>
+<script src="{% static "js/jquery.colorbox-min.js" %}"></script>
+
+
+<script src="{% static "js/bootstrap.js" %}"></script>
+<script src="{% static "js/bootstrap-extras.js" %}"></script>
+{% block extra_js %}{% endblock %}
+{% endcompress %}
+<!--[if lt IE 9]>
+<script src="{% static "js/html5shiv.js" %}"></script>
+<![endif]-->
+
+{% block extra_head %}{% endblock %}
+
+</head>
+<body id="{% block body_id %}body{% endblock %}">
+
+    {# =mozilla =persona #}
+    {# {% browserid_info %} #}
+    
+    {# {% if settings.SITE_TAGLINE %}<p class="navbar-text">{{ settings.SITE_TAGLINE }}</p>{% endif %} #}
+    
+    {# <ul class="breadcrumbs"> #}
+    {% spaceless %}
+    <p class="breadcrumbs">
+    {% block breadcrumb_menu %}{% page_menu "pages/menus/breadcrumb.html" %}{% endblock %}
+    </p>
+    {% endspaceless %}
+    {# </ul> #}
+    
+    <p class="menu">
+      <a href="/upload/"><b>UPLOAD</b> New Collection</a> | <a class="togglehelp" href="#">Help</a> |
+          {# <a href="{% url 'sitemap' %}">{% trans "Sitemap" %}</a> | <a href="{% url 'page' 'faq' %}">{% trans "FAQ" %}</a> | #}
+          {% include "accounts/includes/user_panel.html" %}
+    </p>
+    
+    {# <div class="nav-collapse collapse"> #}
+    {#     {% search_form "all" %} #}
+    {#     {% page_menu "pages/menus/dropdown.html" %} #}
+    {# </div> #}
+
+<br style="clear:both;">
+<div class="container-fluid">
+
+{% nevercache %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }}" data-alert="alert">
+    <a class="close" href="#" onclick="$(this).parent().fadeOut('fast'); return false;">×</a>{{ message }}
+</div>
+{% endfor %}
+{% endnevercache %}
+
+
+
+
+
+
+</div>
+
+<div class="container-fluid">
+<div class="row-fluid">
+
+{# <div class="span2 left"> #}
+{#  #}
+{# </div> #}
+
+<div class="span10 middle">
+  <h1>{% block title %}{% endblock %}</h1>
+  <div class="help" style="display:none;">
+    <h3>Help <a class="togglehelp small" href="#" class="small">Hide</a></h3>
+    <ol style="list-style:upper-alpha inside;">
+      <li>Reorder by clicking on thumbnails and dragging.</li>
+      <li>Click &lsquo;<strong>YesNoNeutral</strong>&rsquo; to toggle between <span style="box-shadow: 0px 0px 3px 2px #09f; color:#09f;">selected</span>, <span style="color:#666;">rejected</span> or <span style="color:#ccc;">neutral</span> settings.</li>
+      <li>Click &lsquo;View&rsquo; to enlarge  photo.</li>
+      <li>Click the <button class="quiet small" style="padding:2px;">Save New Edit ✍</button> button to save the current edit.</li>
+      {# <li>Use the Picture Filter on the sidebar to choose which pictures are displayed in the current edit.</li> #}
+    </ol>
+  </div>
+    {% block main %}{% endblock %}
+</div>
+
+<div class="span2 right">
+    {# {% block left_panel %} #}
+    {# <div class="panel tree">{% page_menu "pages/menus/tree.html" %}</div> #}
+    {# {% endblock %} #}
+    {# <div class="panel"> #}
+    {% block right_panel %}
+    {# {% ifinstalled mezzanine.twitter %} #}
+    {# {% include "twitter/tweets.html" %} #}
+    {# {% endifinstalled %} #}
+    {% endblock %}
+    {# </div> #}
+</div>
+
+</div>
+</div>
+
+<footer>
+<div class="container-fluid">
+
+{% page_menu "pages/menus/footer.html" %}
+<p>
+    {# {% now "Y" %}  #}<a href="/" title="Homepage.">Editdown</a> by <a href="http://hypertexthero" title="Web, design, simplicity.">Hypertexthero</a> aka <a href="http://simongriffee.com/notebook/editing" title="Editing - SimonGriffee.com">Simon Griffee</a>, with help from <a href="http://jrbrubaker.com">John Ryan Brubaker</a>.
+    {# {% trans "Powered by" %} #}
+    {# <a href="http://mezzanine.jupo.org">Mezzanine</a>{% ifinstalled cartridge.shop %}, #}
+    {# <a href="http://cartridge.jupo.org">Cartridge</a>{% endifinstalled %} #}
+    {# {% trans "and" %} #}
+    {# <a href="http://www.djangoproject.com">Django</a> #}
+    {# <span class="separator">|</span> #}
+    {# {% trans "Theme by" %} <a href="http://twitter.github.com/bootstrap/">Bootstrap</a> #}
+    {# {% ifinstalled mezzanine.mobile %} #}
+    {# <span class="separator">|</span> #}
+    {# <a href="{% url "set_device" "mobile" %}?next={{ request.path }}">{% trans "View Mobile Site" %}</a> #}
+    {# {% endifinstalled %} #}
+</p>
+</div>
+</footer>
+
+{% include "includes/footer_scripts.html" %}
+
+{# =mozzila =persona #}
+
+{# {% browserid_js %} #}
+{# <script type="text/javascript" src="{% static "js/browserid.js" %}"></script> #}
+{# <script type="text/javascript" src="https://login.persona.org/include.js"></script> #}
+
+</body>
+</html>

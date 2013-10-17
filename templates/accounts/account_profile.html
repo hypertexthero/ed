@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n future mezzanine_tags accounts_tags %}
+
+{% block meta_title %}{{ profile_user|username_or:"get_full_name" }}{% endblock %}
+{# {% block title %}{{ profile_user|username_or:"get_full_name" }}{% endblock %} #}
+{% block title %}{{ profile_user.get_full_name }}{% endblock %}
+{% block body_id %}account{% endblock %}
+
+{% block breadcrumb_menu %}
+{{ block.super }}
+<span>{% if request.user.get_profile.first_name or request.user.get_profile.last_name %}{{ request.user.get_profile.first_name }} {{ request.user.get_profile.last_name }}{% else %}{{ request.user.username }}{% endif %}{# {{ profile_user|username_or:"get_full_name" }} #}</span>
+{% endblock %}
+
+{% block main %}
+{# <h2>{{ profile_user.get_full_name }}</h2> #}
+{# <img style="margin:0 0 20px 10px;" src="{% gravatar_url profile_user.email 128 %}"> #}
+
+{% if user.is_superuser %}
+
+    <a class="btn btn-small btn-info" href="/admin/auth/user/{{ profile_user.id }}">Edit as admin</a>
+
+{% endif %}
+
+{% include "accounts/account_profile_details.html" %}
+
+{% if profile_user == request.user %}
+<p class="form-actions">
+<a class="btn btn-large btn-info" style="" href="{% url "profile_update" %}">{% trans "Update your profile" %}</a>
+</p>
+{% endif %}
+
+{% endblock %}
+
+{% block local_nav %}
+{% endblock local_nav %}
+{% block pageinfo %}
+{% endblock pageinfo %}

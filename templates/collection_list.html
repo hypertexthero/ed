@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <h2>Collection List</h2>
+  
+  <ul>
+    {% for collection in latest  %}
+      <li><a href="/u/{{collection.owner}}/{{collection.title}}/{{collection.id}}">{{ collection.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

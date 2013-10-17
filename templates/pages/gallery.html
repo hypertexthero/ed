@@ -1,0 +1,119 @@
+{% extends "pages/page.html" %}
+
+{% load mezzanine_tags staticfiles %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static "css/colorbox.css" %}">
+{% endblock %}
+
+{% block extra_js %}
+{{ block.super }}
+{# <script src="{% static "mezzanine/js/jquery.tools.toolbox.expose.js" %}"></script> #}
+{# <script src="{% static "mezzanine/js/jquery.tools.overlay.js" %}"></script> #}
+{# <script src="{% static "mezzanine/js/gallery.js" %}"></script> #}
+
+
+{% endblock %}
+
+{% block main %}
+{{ block.super }}
+
+<ol class="thumbnails gallery">
+{% with page.gallery.images.all as images %}
+{% for image in images %}
+
+  <li class="thumb" class="tohide" id="photo_{{photo.id}}">
+    <a class="small viewthumb" rel="#image-{{ image.id }}" title="{{ image.description }}." href="{{ MEDIA_URL }}{{ image.file }}">View
+        {# <img class="image-overlay-thumb" src="{{ MEDIA_URL }}{% thumbnail image.file 75 75 %}">     #}
+        {# ☼ #} 
+    </a> · 
+    <a href="#" class="mark neutral small" title="Toggle yes, no or neutral."><b>Yes</b><i>No</i>Neutral</a>
+
+    <input type="hidden" name="status" value="{{ image.status }}" id="status" />
+    
+    <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 200 %}">
+        {# <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 600 %}" alt=""><br> #}
+        {# <p>{{ image.description }}<br>{{ forloop.counter }} / {{ images|length }}</p> #}
+  </li>
+{% endfor %}
+{% endwith %}
+</ol>
+{% endblock %}
+
+{% block right_panel %}
+    <h1>{% block title %}{{ page.title }}{% endblock %}</h1>
+    
+    {% editable page.gallery.content %}
+    {{ page.gallery.content|richtext_filters|safe }}
+    {% endeditable %}
+    <p style="margin:-1em 0 0;"><a href="#" class="small">Edit or Add Photos</a></p>
+    
+    <h2 class="pull-left" style="margin-right:3px;">Collaborators <small><a href="#" class="small">Invite New</a></small></h2>
+    <br class="clear">
+
+    <!--<input type="checkbox" name="notify" value="1" />
+    <label for="notify" class="quiet small">Be notified of new edits</label>
+    <br>
+    <br>-->
+    
+    <ul class="unstyled small">
+      <li><b><a href="{{ profile_url }}">{{ user }}</a></b> 
+        
+        {% if profile_user == request.user %} <a href="{% url "profile_update" %}" class="small">Edit Profile</a>{% endif %}</li>
+      <li><b><a href="#">JRB</a></b> · <a href="#" class="small" title="Remove this collaborator - her edits will remain, but she wont be abe to make any further edits.">Remove</a></li>
+    </ul>
+
+    {# <h2>View Filter</h2> #}
+    {#  #}
+    {# <div class="radio"> #}
+    {#   <label> #}
+    {#     <input type="radio" name="viewFilter" id="tyes" value="option1"> #}
+    {#     Yes #}
+    {#   </label> #}
+    {# </div> #}
+    {# <div class="radio"> #}
+    {#   <label> #}
+    {#     <input type="radio" name="viewFilter" id="tno" value="option2"> #}
+    {#     No #}
+    {#   </label> #}
+    {# </div> #}
+    {# <div class="radio"> #}
+    {#   <label> #}
+    {#     <input type="radio" name="viewFilter" id="tneutrol" value="option1"> #}
+    {#     Neutral #}
+    {#   </label> #}
+    {# </div> #}
+    {# <div class="radio"> #}
+    {#   <label> #}
+    {#     <input type="radio" name="viewFilter" id="tall" value="option2" checked> #}
+    {#     All #}
+    {#   </label> #}
+    {# </div> #}
+
+    <h2 class="pull-left" style="margin-right:3px;">Edits</h2>
+    {# <a class="btn btn-small">Save This Edit  ✒</a> #}
+    <button type="button" class="btn" style="margin:0.45em 0 0;">Save New Edit <span style="font-size:24px; line-height:0;">✍</span></button>
+    <br class="clear">
+
+    <ul class="unstyled small">
+    <li><b><a href="#">3 &middot; A few minutes ago &middot; JRB</a></b></li>
+    <li><a href="#">2 &middot; 13 hours ago &middot; Simon</a></li>
+    <li><a href="#">1 &middot; Thu 31 Jan 2013 &middot; Simon</a></li>
+    </ul>
+    
+    {# http://rstrobl.com/blog/2012/01/19/sorting-django-model-instances-jqueryui-sortable/ #}
+    <script type="text/javascript" charset="utf-8">
+      $(document).ready(function() {
+        $( ".thumbnails" ).sortable({
+          update: function(event, ui) {
+            var serial = $('.thumbnails').sortable('serialize');
+      	  $.ajax({
+          url: "{% url 'editdown.views.sort_photos' collection.id %}",
+          type: "post",
+          data: serial
+        });
+          },
+        // }).disableSelection();
+      });
+    </script>
+{% endblock %}

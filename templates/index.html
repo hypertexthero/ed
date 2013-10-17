@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block meta_title %}{% trans "Home" %}{% endblock %}
+{# {% block title %}{% trans "Home" %}{% endblock %} #}
+
+{% block breadcrumb_menu %}
+{# <span>{% trans "Home" %}</span> #}
+{% endblock %}
+
+{% block main %}
+{% blocktrans %}
+<h1>Editdown</h1>
+<p>This site helps you choose your best photographs. <a href="/upload/">Upload</a> a set of pictures, choose the best ones, arrange them in a sequence and save a unique URL with the new edit to be sent to trusted collaborators for discussion. Login is handled by <a href="https://persona.org">Mozilla Persona</a> — the Editdown site does not store your password.</p>
+{% endblocktrans %}
+{% endblock %}
