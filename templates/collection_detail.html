@@ -15,7 +15,7 @@
 
 
 {% endblock %}
-<form method="POST" action="{% url collection_update %}">
+<form action="{% url 'collection_update' collection.owner.username colleciton.slug collection.id %}" method="post">
     {% csrf_token %}
     
 {% block main %}
@@ -26,14 +26,20 @@
   {% with collection.images.all as images %}
   {% for image in images %}
 
-  <li class="thumb" class="tohide" id="img_{{photo.id}}">
+  <li class="thumb" class="tohide" id="photo_{{photo.id}}">
+    
     <a class="small viewthumb" rel="#image-{{ image.id }}" title="{{ image.description }}." href="{{ MEDIA_URL }}{{ image.file }}">View
         {# <img class="image-overlay-thumb" src="{{ MEDIA_URL }}{% thumbnail image.file 75 75 %}">     #}
         {# ☼ #} 
     </a> · 
 
-    <input type="hidden" name="status{{photo.id}}" class="markinput" id="status{{photo.id}}" value="{{ image.status }}" />
-    <a href="#" class="mark neutral small" title="Toggle yes, no or neutral."><b>Yes</b><i>No</i>Neutral</a>
+    <input type="hidden" name="status{{photo.id}}" class="markinput" id="status{{photo.id}}" value="neutral" />
+    <a href="#" class="mark neutral small" title="Yes, no or neutral.">
+      <b data-class="yes">Yes</b> 
+      <span data-class="unsure">Unsure</span>
+      <i data-class="no">No</i>
+    </a>
+    
     <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 200 %}">
   
         {# <img src="{{ MEDIA_URL }}{% thumbnail image.file 0 600 %}" alt=""><br> #}
@@ -75,14 +81,14 @@
 
     <h2 class="pull-left" style="margin-right:3px;">Edits</h2>
     
-    <button type="submit" class="btn" style="margin:0.45em 0 0;">Save New Edit <span style="font-size:24px; line-height:0;">✍</span></button>
+    <input type="submit" class="btn" style="margin:0.45em 0 0;" value="Save New Edit" /> {# <span style="font-size:24px; line-height:0;">✍</span> #}
 
     <br class="clear">
 
     <ul class="unstyled small">
     {# http://stackoverflow.com/questions/8038035/django-reversion-how-to-get-user-id #}
     {% for version in collection.history.all %}
-      <li><b><a href="{{}}">{{ version }} &middot; {{ collection.date_updated|timesince }} &middot; {{ collection.changed_by.user.username }}</a></b></li>
+      <li><b><a href="{{ collection.version }}">{{ version.id }} &middot; {{ version.history_date|timesince }} &middot; {{ version.history_user }}</a></b></li>
       {# <li><b><a href="#">3 &middot; A few minutes ago &middot; JRB</a></b></li> #}
       {# <li><a href="#">2 &middot; 13 hours ago &middot; Simon</a></li> #}
       {# <li><a href="#">1 &middot; Thu 31 Jan 2013 &middot; Simon</a></li> #}

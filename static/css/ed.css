@@ -27,19 +27,20 @@
   li.thumb:focus, ol#thumbs li:active {outline:1px dashed #ABEBFF;}
   li.thumb a {text-decoration:none; color:#999;}
   /*  div.photo {display:block;}*/
-  li.thumb img {padding:5px; margin:0 auto 5px; max-width:200px;}
+  li.thumb img {margin:0 auto 5px; max-width:200px;}
   /* https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_selectors*/
  /*http://stackoverflow.com/a/6810937/412329 */
   a.mark {} /*display:block;*/
   a.mark i {font-style:normal;}
   a.mark.yes {color:#09f !important;}
   a.mark.yes b {text-transform:uppercase;}
+  a.mark.yes i, a.mark.yes span {color:#999;}
   a.yes + img {box-shadow: 0px 0px 5px 3px #09f; color:#09f;} 
   /*ol#thumbs li.yes b {background:#09f;}*/
   a.mark.no {color:#444;}
   a.mark.no i {text-transform:uppercase;}
   a.no + img {opacity:0.2;}
-  a.neutral {}
+  a.unsure {}
     
   ul {margin:0 0 1em;}
   /*button {padding:0.6em 0.7em 0.7em; font-weight:bold; line-height:8px; border-radius:5px; background:#fff;}

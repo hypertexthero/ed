@@ -5,7 +5,7 @@ from django.contrib import admin
 from mezzanine.core.views import direct_to_template
 
 from editdown.views import CollectionList, Collection, CollectionUpdate, \
-CollectionDelete, Collaborators, SortPhotos, Upload
+CollectionDelete, Collaborators, CollectionUpdate, Upload
 
 admin.autodiscover()
 
@@ -22,7 +22,7 @@ urlpatterns = patterns("",
     url(r'^upload/', view=Upload.as_view(), name="upload"),
     
     # Sort using AJAX
-    url(r'^sort-photos/', view=SortPhotos, name="sort_photos"),
+    # url(r'^sort-photos/', view=CollectionUpdate, name="sort_photos"),
     
     # User Collection List
     url(r'^u/(?P<username>[\w\._\-]+)/$',
@@ -34,8 +34,8 @@ urlpatterns = patterns("",
         view=Collection.as_view(), 
         name="collection_detail"),
     
-    # User Collection Edit
-    url(r'^u/(?P<username>[\w\._\-]+)/(?P<slug>[\w-]+)/update/$',
+    # User Collection Update
+    url(r'^u/(?P<username>[\w\._\-]+)/(?P<slug>[\w-]+)/(?P<id>\d+)/update/$',
         view=CollectionUpdate.as_view(), 
         name="collection_update"),
 
