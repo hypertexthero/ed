@@ -1,7 +1,3 @@
-# Editdown
-
-[An online photo editing site specialized in the traditional editing process of culling a collection of photos.](http://simongriffee.com/notebook/editing).
-
 ## Things to do
 
 - Django integration. Uploads, edits/versions, user accounts (persona), invites, comments.
